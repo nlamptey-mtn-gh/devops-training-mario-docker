@@ -24,3 +24,21 @@ jobs:
         run: |
           docker build -t docker.io/barleymalt/training-repo:mario-game-${{ env.VERSION }} .
           docker push docker.io/barleymalt/training-repo:mario-game-${{ env.VERSION }}
+      
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+ 
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+        
+      - name: Get Docker Image from Docker Hub
+        run: |
+          docker pull docker.io/barleymalt/training-repo:mario-game-${{ env.VERSION }}
+          docker save -o supermariolatestdockerimage.tar docker.io/barleymalt/training-repo:mario-game-${{ env.VERSION }}
+     
+      - name: Run Trivy vulnerability scanner in tarball mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          input: /github/workspace/supermariolatestdockerimage.tar
+          exit-code: '0'
+          severity: 'CRITICAL,HIGH'
