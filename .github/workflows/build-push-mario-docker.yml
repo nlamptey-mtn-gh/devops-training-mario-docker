@@ -25,6 +25,11 @@ jobs:
           docker build -t docker.io/barleymalt/training-repo:mario-game-${{ env.VERSION }} .
           docker push docker.io/barleymalt/training-repo:mario-game-${{ env.VERSION }}
       
+  
+  run_container_image_scan_on_supermario_docker_image:
+    runs-on: ubuntu-latest	
+ 
+    steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
  
