@@ -22,5 +22,5 @@ jobs:
  
       - name: Build and Push Docker Image
         run: |
-          docker build -t docker.io/barleymalt/training-repo:mario-game-1.0.0 .
-          docker push docker.io/barleymalt/training-repo:mario-game-1.0.0
+          docker build -t docker.io/barleymalt/training-repo:mario-game-${{ env.VERSION }} .
+          docker push docker.io/barleymalt/training-repo:mario-game-${{ env.VERSION }}
