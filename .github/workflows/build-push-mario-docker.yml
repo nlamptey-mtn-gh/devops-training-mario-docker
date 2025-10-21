@@ -35,10 +35,11 @@ jobs:
         run: |
           docker pull docker.io/barleymalt/training-repo:mario-game-${{ env.VERSION }}
           docker save -o supermariolatestdockerimage.tar docker.io/barleymalt/training-repo:mario-game-${{ env.VERSION }}
+          ls -lh #sanity check that file exists
      
       - name: Run Trivy vulnerability scanner in tarball mode
         uses: aquasecurity/trivy-action@master
         with:
           input: supermariolatestdockerimage.tar
-          exit-code: '0'
+          exit-code: '1'
           severity: 'CRITICAL,HIGH'
